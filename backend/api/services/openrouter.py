@@ -1,9 +1,14 @@
 import httpx
 import json
 import logging
+import os
 from typing import Dict, Any
+from dotenv import load_dotenv
 
-OPENROUTER_API_KEY = "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"
+load_dotenv()  # Load environment variables from .env file
+
+
+OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
 
 logger = logging.getLogger(__name__)
