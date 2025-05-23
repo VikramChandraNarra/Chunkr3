@@ -175,7 +175,7 @@ graph TD
   - Radix UI Components
   - Zustand (State management)
 
-![Tech Stack Architecture](https://raw.githubusercontent.com/vikramnr/chunkr3/main/public/tech-stack.png)
+![Tech Stack Architecture](https://github.com/VikramChandraNarra/Chunkr3/blob/main/architecture.png?raw=true)
 
 
 ## 🐳 Docker Support
