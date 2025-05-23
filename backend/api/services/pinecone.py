@@ -4,6 +4,7 @@ from sentence_transformers import SentenceTransformer
 from pinecone import Pinecone, ServerlessSpec
 from dotenv import load_dotenv
 import time
+import logging
 
 load_dotenv()
 
@@ -52,16 +53,47 @@ def upsert_chunks(chunks: List[Dict], chat_id: str):
     index.upsert(vectors=vectors, namespace=chat_id)
 
 # Query Pinecone
-def query_chunks(embedding: List[float], top_k: int = 5, namespace: str = None):
+def query_chunks(
+    embedding: List[float],
+    top_k: int = 1000,
+    namespace: str = None,
+    score_threshold: float = 0.0
+):
+    result = index.query(
+        vector=embedding,
+        top_k=top_k,
+        include_metadata=True,
+        include_values=False,
+        namespace=namespace
+    )
 
-    print("vikram result", embedding[:5])
+    print("Full result:", result)
 
-    result = index.query(vector=embedding, top_k=top_k, include_metadata=True, namespace=namespace)
+    # Filter by score threshold
+    filtered_matches = [
+        match for match in result["matches"]
+        if match.get("score", 0) >= score_threshold
+    ]
 
-    print("vikram result", result)
-    return result["matches"]
+    if not filtered_matches:
+        print("No matches above threshold. Returning all matches.")
+        return result["matches"]
 
+    print("Filtered matches:", filtered_matches)
+    return filtered_matches
 
+def check_namespace_has_vectors(namespace: str) -> bool:
+    """Check if a namespace exists and has vectors in Pinecone."""
+    try:
+        # Query with empty vector to check if namespace has any vectors
+        # Using a small limit to minimize data transfer
+        stats = index.describe_index_stats()
+        namespace_stats = stats.get("namespaces", {}).get(namespace, {})
+        vector_count = namespace_stats.get("vector_count", 0)
+        return vector_count > 0
+    except Exception as e:
+        logger.error(f"Error checking namespace vectors: {e}")
+        return False
 
 # def wait_for_vectors(namespace: str, min_count: int = 1, timeout: int = 10, interval: float = 0.5) -> bool:
 #     """

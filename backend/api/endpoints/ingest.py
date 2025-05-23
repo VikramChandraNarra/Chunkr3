@@ -1,11 +1,12 @@
 from fastapi import APIRouter, UploadFile, File, Form, HTTPException
 from fastapi.responses import JSONResponse
+from pydantic import BaseModel
+from typing import List, Dict
 
 from chunkr_ai import Chunkr
 import tempfile
 import os
 from ..services import pinecone as pinecone_service
-from typing import List, Dict
 
 
 router = APIRouter()
@@ -46,5 +47,18 @@ async def ingest_document(file: UploadFile = File(...), chat_id: str = Form(...)
         pinecone_service.upsert_chunks(upsert_ready_chunks, chat_id)
 
         return {"chunks": upsert_ready_chunks}
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"error": str(e)})
+
+class CheckIndexedRequest(BaseModel):
+    chat_id: str
+    file_names: List[str]
+
+@router.post("/check_indexed")
+async def check_indexed(request: CheckIndexedRequest):
+    try:
+        # Query Pinecone to check if the namespace exists and has vectors
+        has_vectors = pinecone_service.check_namespace_has_vectors(request.chat_id)
+        return {"indexed": has_vectors}
     except Exception as e:
         return JSONResponse(status_code=500, content={"error": str(e)})
