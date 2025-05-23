@@ -178,6 +178,70 @@ graph TD
 ![Tech Stack Architecture](https://github.com/VikramChandraNarra/Chunkr3/blob/main/architecture.png?raw=true)
 
 
+## Data Models
+
+### Chat Models
+```mermaid
+classDiagram
+    class MessagePart {
+        +str type
+        +str text
+    }
+    
+    class Message {
+        +str role
+        +str content
+        +List[MessagePart] parts
+    }
+    
+    class ChatRequest {
+        +str id
+        +List[Message] messages
+        +str model
+    }
+    
+    class Choice {
+        +int index
+        +Dict[str, str] message
+        +Optional[str] finish_reason
+    }
+    
+    class Usage {
+        +int prompt_tokens
+        +int completion_tokens
+        +int total_tokens
+    }
+    
+    class ChatResponse {
+        +str id
+        +str model
+        +int created
+        +List[Choice] choices
+        +Usage usage
+    }
+
+    Message --> MessagePart
+    ChatRequest --> Message
+    ChatResponse --> Choice
+    ChatResponse --> Usage
+```
+
+### Ingest Models
+```mermaid
+classDiagram
+    class ChunkMetadata {
+        +str chunk_id
+        +str text
+        +Optional[int] page_number
+    }
+    
+    class IngestResponse {
+        +List[ChunkMetadata] chunks
+    }
+
+    IngestResponse --> ChunkMetadata
+```
+
 ## 🐳 Docker Support
 
 Both frontend and backend include Dockerfile configurations for containerized deployment.
