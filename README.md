@@ -2,6 +2,14 @@
 
 A modern document chat application that allows users to have conversations with their documents while maintaining source citations. Built with FastAPI and Next.js.
 
+## Application Screenshots
+
+| | | |
+|:-------------------------:|:-------------------------:|:-------------------------:|
+|<img src="photos/home.png" width="250">|<img src="photos/search.png" width="250">|<img src="photos/docparse.png" width="250">|
+|<img src="photos/citation1.png" width="250">|<img src="photos/citation2.png" width="250">|<img src="photos/default.png" width="250">|
+|<img src="photos/tut1.png" width="250">|<img src="photos/tut2.png" width="250">|<img src="photos/tut3.png" width="250">|
+|<img src="photos/tut4.png" width="250">|<img src="photos/tut5.png" width="250">| |
 
 ## 🌐 Live Demo
 
