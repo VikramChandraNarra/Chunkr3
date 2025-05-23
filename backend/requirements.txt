@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+httpx
+python-dotenv
+sentence-transformers
+pinecone
+pydantic
+chunkr-ai
+python-multipart
