@@ -21,6 +21,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get("/")
+def healthcheck():
+    return {"status": "ok"}
+
+
 # Include routers
 app.include_router(chat.router, prefix="/api")
 app.include_router(ingest.router, prefix="/api")
