@@ -57,7 +57,7 @@ pip install -r requirements.txt
 Create a `.env` file in the backend directory:
 ```env
 # Chunkr Configuration
-CHUNKR_API_KEY="ch_R8gs1HovNaj_CXWDa4iYsVrAi4ZYKia7PcbuFSZqH4HfU"
+CHUNKR_API_KEY=
 CHUNKR_API_URL="https://api.chunkr.ai/v1/chunk"
 
 # OpenRouter Configuration
@@ -66,7 +66,7 @@ OPENROUTER_BASE_URL="https://openrouter.ai/api/v1"
 
 
 # Pinecone Configuration
-PINECONE_API_KEY="pcsk_7Vc8WU_BiovfBznthALfNHB8M3MrfuBe31pEjSjK5apSt58EpMCDWNS7U6NXeuJG8qfv6i"
+PINECONE_API_KEY=
 PINECONE_ENV="us-west1-gcp"  # or your Pinecone environment
 PINECONE_INDEX_NAME="chunkr3"
 
